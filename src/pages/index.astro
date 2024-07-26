@@ -1,21 +1,28 @@
 ---
+import { HomeForm } from '../components/HomeForm';
 import Main from '../layouts/Main.astro';
 
 ---
 <Main title="Boraduo - Home">
+	<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module" slot="header">
+	</script>
 	<main class="container">
 		<section class="wrapper">
 			<div class="hunters">
+				<dotlottie-player class="bg-animation" layout={{fit: "cover" }} src="../../public/bganimation.json" background="transparent" speed="0.4" direction="1" playMode="normal" loop autoplay></dotlottie-player>
 				<div class="notice">
 					<h2>Encontre seu duo de maneira mais simples</h2>
 				</div>
 				<img class="hunters-fig" src="../../public/images/duos.png" alt="Grupo de caçadores">
 			</div>
+			<div class="form">
+				<HomeForm client:only/>
+			</div>
 		</section>
 	</main>
 </Main>
 
-<style scoped>
+<style scoped>	
 	.wrapper {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
@@ -24,13 +31,14 @@ import Main from '../layouts/Main.astro';
 		padding-left: 40px;
 		padding-right: 40px;
 	}
-	.hunters {
+	.hunters {	
 		display: grid;
 		align-items: center;
 		justify-items: center;
+		position: relative;
 		.hunters-fig{ 
 			width: 800px;
-			max-width: 100%;
+			max-width: 110%;
 		}
 		.notice {
 			display: inline-block;
@@ -42,6 +50,13 @@ import Main from '../layouts/Main.astro';
 			max-width: 100%;
 			font-size: .85rem;
 			font-weight: 300;
+		}
+		.bg-animation {
+			position: absolute;
+			z-index: -1;
+			width: 75vw;
+			height: 1200px;
+			left: -140px;		
 		}
 	}
 	.container {

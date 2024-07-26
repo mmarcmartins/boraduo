@@ -1,0 +1,13 @@
+
+.footer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px
+}
+
+.form-action {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 500px;
+}

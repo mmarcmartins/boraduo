@@ -1,0 +1,42 @@
+.action-button {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #383a3d;
+    padding: 20px 40px;
+    border: 1px solid #23262D;
+    transition: border-color .1s ease-in-out;
+    &:not(:disabled):hover {
+        cursor: pointer;
+        border-color: #FFF;
+        &:after{
+            right: 0;
+            bottom: 0;
+        }
+    }
+    &:after {
+        display: block;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        bottom: -10px;
+        right: -10px;
+        background-color: #FF2261;
+        z-index: -1;
+        transition: bottom .2s ease-in-out, right .2s ease-in-out ;
+    }
+    .title {
+        color:#FFF;
+        font-size: 1rem;
+        font-weight: 300;
+    }
+    &:disabled {
+        opacity: .4;
+        &:after{
+            opacity: .2;
+        }
+    }
+}
