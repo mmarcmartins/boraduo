@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { CustomSwitch } from "../CustomSwitch";
 import { Footer } from "./Footer";
 import { z } from "zod";
@@ -11,7 +10,7 @@ const homeFormSchema = (gameOptions: string[]) => z.object({
             name: z.string().min(1, "Nome é obrigatório"),
             game: z.string().refine((val) => gameOptions.includes(val)),
             roomCode: z.string().optional(),
-            createRoom: z.boolean().default(false)
+            createRoom: z.boolean().default(true)
         }).refine(({createRoom,roomCode}) => {
             if(!createRoom && !roomCode) return false
         }, {
@@ -24,6 +23,7 @@ export const HomeForm = () => {
     const { 
         register,
         handleSubmit,
+        setValue,
         watch,
         formState: { errors }
       } = useForm<homeFormData>({
@@ -31,7 +31,13 @@ export const HomeForm = () => {
       })    
 
     const handleSwitchClick = (event: React.MouseEvent<HTMLInputElement>) => {        
-        setCreateRoom(event.target.checked);
+        setValue("createRoom",event.target.checked);
+    }
+
+    const watchCreateRoom = watch("createRoom", true);
+
+    const onSubmit = (data: homeFormData) => {
+        console.log(data);
     }
 
     return(
@@ -44,13 +50,17 @@ export const HomeForm = () => {
             </div>
             <div>
                 <label htmlFor="game">Quero um duo para:</label>
-                
                 {errors.name && <span>{errors.name.message}</span>}
             </div>   
+            {watchCreateRoom && (
+            <div>
+                <label htmlFor="game">Código da sala</label>
+                {errors.name && <span>{errors.name.message}</span>}
+            </div>   
+            )}
             <CustomSwitch onClick={handleSwitchClick}/>
-            <Footer isCreateRoom={createRoom}/>   
-        </form>
-                        
+            <Footer isCreateRoom={watchCreateRoom}/>   
+        </form>            
         </>
     )
 }
