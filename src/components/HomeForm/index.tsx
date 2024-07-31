@@ -13,7 +13,7 @@ const homeFormSchema = (gameOptions: string[]) => z.object({
             roomCode: z.string().optional(),
             JoinRoom: z.boolean().default(true)
         }).refine(({JoinRoom,roomCode}) => {
-            if(!JoinRoom && !roomCode) return false
+            if(JoinRoom && !roomCode) return false
         }, {
             message: "Código da sala é obrigatório"})
             
@@ -37,40 +37,44 @@ export const HomeForm = () => {
 
     const watchJoinRoom = watch("JoinRoom", false);
     
+    const disabledClass = !watchJoinRoom ? 'disabled' : '';
+
     const onSubmit = (data: homeFormData) => {
         console.log(data);
     }
 
     return(
-        <>
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
+        <form className="home-form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="content">
+            <div className="input-holder">
                 <label htmlFor="name">Nome:</label>
-                <input {...register("name")} />
+                <input type="text" {...register("name")} />
                 {errors.name && <span>{errors.name.message}</span>}
             </div>
-            <div>
-                <label htmlFor="game">Quero um duo para:</label>
-                <SelectAutoComplete 
-                    items={[
-                        "League of legends",
-                        "Call of duty"
-                    ]} 
-                    onSelectItem={(newValue) => setValue("game", newValue) }
-                />
-                {errors.name && <span>{errors.name.message}</span>}
-
+            <div className="input-holder">
+                <label htmlFor="game">Quero um duo para:</label>                
+                    <SelectAutoComplete 
+                        items={[
+                            "League of legends",
+                            "Call of duty"
+                        ]} 
+                        onSelectItem={(newValue) => setValue("game", newValue) }
+                    />                
+                {errors.game && <span>{errors.game.message}</span>}
             </div>   
-            {watchJoinRoom && (
-            <div>
+            
+            <div className={`input-holder ${disabledClass}`}>
                 <label htmlFor="roomCode">Código da sala</label>
-                <input {...register("roomCode")} />
+                <input type="text" disabled={!!disabledClass} {...register("roomCode")} />
                 {errors.roomCode && <span>{errors.roomCode.message}</span>}
             </div>   
-            )}
-            <CustomSwitch checked={watchJoinRoom} onClick={handleSwitchClick}/>
+            
+            <div className="switch-description">
+                <CustomSwitch checked={watchJoinRoom} onClick={handleSwitchClick}/>
+                <span>Criar sala / entrar na sala</span>
+            </div>
+            </div>
             <Footer isJoinRoom={watchJoinRoom}/>   
-        </form>            
-        </>
+            </form>            
     )
 }

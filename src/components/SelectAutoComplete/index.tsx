@@ -1,6 +1,6 @@
+
 import type { ChangeEvent, KeyboardEvent } from "react";
 import { memo, useEffect, useRef, useState } from "react";
-import { useClickOutside } from "../../hooks/useClickOutside";
 import { useThrottle } from "../../hooks/useThrottle";
 
 type SelectAutoCompleteProps = {
@@ -21,11 +21,6 @@ export const SelectAutoComplete = memo(({ items, onSelectItem, placeholder}: Sel
     const selected = selectedRef.current?.querySelector(".selected-item");
     selected?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
-  useClickOutside({
-    ref: inputRef,
-    cb: () => setTimeout(() => setIsOpened(false), 100)
-  });
 
   useEffect(() => {
     inputRef.current?.setAttribute("aria-expanded", isOpened.toString());
@@ -84,9 +79,13 @@ export const SelectAutoComplete = memo(({ items, onSelectItem, placeholder}: Sel
     setIsOpened(true);
   };
 
+  const onBlur = () => {
+    setTimeout(() => setIsOpened(false), 100)
+  }
+
   
   return (
-    <div className="custom-autocomplete">
+    <div className="select-custom-autocomplete">
       <input
         type="text"
         value={userInput}
@@ -94,6 +93,7 @@ export const SelectAutoComplete = memo(({ items, onSelectItem, placeholder}: Sel
         className="field"
         placeholder={placeholder}
         onFocus={handleFocus}
+        onBlur={onBlur}
         onChange={useThrottle(handleChange, 100)}
         aria-haspopup="listbox"
         aria-expanded="false"
@@ -101,7 +101,7 @@ export const SelectAutoComplete = memo(({ items, onSelectItem, placeholder}: Sel
         aria-controls="custom-autocomplete-list"
         aria-autocomplete="list"
       />
-      {isOpened && (
+      {isOpened && filter.length > 0 && (
         <ul id="custom-autocomplete-list" className="list" role="listbox" ref={selectedRef}>
           {filter.map((curr, index) => (
             <li
