@@ -3,9 +3,15 @@ import { memo, useEffect, useRef, useState } from "react";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { useThrottle } from "../../hooks/useThrottle";
 
-export const AutoComplete = memo(({ items }: { items: string[] }) => {
+type SelectAutoCompleteProps = {
+  items: string[];
+  onSelectItem: (name: string) => void;  
+  placeholder?: string;
+};
+
+export const SelectAutoComplete = memo(({ items, onSelectItem, placeholder}: SelectAutoCompleteProps) => {
   const [userInput, setUserInput] = useState("");
-  const [filter, setFilter] = useState<string[]>([]);
+  const [filter, setFilter] = useState<string[]>(items);
   const [isOpened, setIsOpened] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -34,13 +40,22 @@ export const AutoComplete = memo(({ items }: { items: string[] }) => {
         setIsOpened(false);
         setFilter([]);
         setActiveIndex(0);
+        onSelectItem(filter[activeIndex]);
         break;
-      case "ArrowUp":
-        setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
+      case "ArrowUp":        
+        setActiveIndex((prev) => {
+            onSelectItem(filter[activeIndex]);
+            return prev > 0 ? prev - 1 : prev          
+          }
+        );        
         setTimeout(scrollIntoItem, 100);
         break;
       case "ArrowDown":
-        setActiveIndex((prev) => (prev < filter.length - 1 ? prev + 1 : prev));
+        setActiveIndex((prev) => {
+            onSelectItem(filter[activeIndex]);
+            return prev < filter.length - 1 ? prev + 1 : prev;         
+          }
+        );           
         setTimeout(scrollIntoItem, 100);
         break;
     }
@@ -59,15 +74,17 @@ export const AutoComplete = memo(({ items }: { items: string[] }) => {
 
   const handleItemClick = (item: string) => {
     setUserInput(item);
+    onSelectItem(item);
     setIsOpened(false);
     setFilter([]);
     setActiveIndex(0);
   };
 
   const handleFocus = () => {
-    if (filter.length > 0) setIsOpened(true);
+    setIsOpened(true);
   };
 
+  
   return (
     <div className="custom-autocomplete">
       <input
@@ -75,7 +92,7 @@ export const AutoComplete = memo(({ items }: { items: string[] }) => {
         value={userInput}
         ref={inputRef}
         className="field"
-        placeholder="Search for an email"
+        placeholder={placeholder}
         onFocus={handleFocus}
         onChange={useThrottle(handleChange, 100)}
         aria-haspopup="listbox"
@@ -84,7 +101,7 @@ export const AutoComplete = memo(({ items }: { items: string[] }) => {
         aria-controls="custom-autocomplete-list"
         aria-autocomplete="list"
       />
-      {isOpened && userInput && (
+      {isOpened && (
         <ul id="custom-autocomplete-list" className="list" role="listbox" ref={selectedRef}>
           {filter.map((curr, index) => (
             <li
