@@ -1,12 +1,7 @@
 .select-custom-autocomplete {
     position: relative;
-    display: inline-block;
+    display: inline-block;    
     width: 100%;
-    ul {
-        max-height: 100%;
-        overflow-y: scroll;
-        overflow-x: hidden;
-      }
     .field{
       width: 100%;
       color: #FFF;
@@ -14,26 +9,35 @@
       background-color: transparent;
       border: none;
       border-bottom: 1px solid #FFF;  
+      &:focus {
+          outline: none;
+      }
     }
-    .list{
+    .list{        
+        overflow-y: scroll;
+        overflow-x: hidden;        
+        position: absolute;
         list-style: none;
         padding: 0;
-        margin: 0;
+        width: 100%;        
+        margin: 0;        
         text-align: left;
-        background-color: #393A3E;
-        max-height: 300px;
-        overflow: hidden;
-        overflow-y: scroll;
+        background-color: #221D1D;        
+        max-height: 200px;
+        z-index: 2;        
         .default-item, .selected-item {
             padding: 10px;
             text-overflow: ellipsis;
-            overflow: hidden;
-            .match {
-                color: blue;
+            overflow: hidden;            
+            border-bottom:1px solid #FF2261;
+            background-color: #252728;
+            &:hover{
+              cursor: pointer;
+              background-color: #383a3d;
             }
-        }
+        }                
         .selected-item {
-            background-color: #FF2261;
+            background-color: #383a3d;
           }
       }
   }
