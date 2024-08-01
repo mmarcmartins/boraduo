@@ -9,6 +9,8 @@ import { SelectAutoComplete } from "../SelectAutoComplete";
 
 const availableGames = ["League of legends", "Call of duty"];
 
+type homeFormData = z.infer<ReturnType<typeof homeFormSchema>>;
+
 const homeFormSchema = (gameOptions: string[]) =>
   z
     .object({
@@ -35,15 +37,12 @@ const homeFormSchema = (gameOptions: string[]) =>
       },
     );
 
-type homeFormData = z.infer<ReturnType<typeof homeFormSchema>>;
-
 export const HomeForm = () => {
   const {
     register,
     handleSubmit,
     setValue,
     watch,
-    trigger,
     clearErrors,
     formState: { errors },
   } = useForm<homeFormData>({
@@ -72,9 +71,6 @@ export const HomeForm = () => {
           <SelectAutoComplete
             {...register("game")}
             items={availableGames}
-            onBlur={() => {
-              trigger("game");
-            }}
             onValidate={() => {
               clearErrors("game");
             }}

@@ -6,7 +6,6 @@ import type {
   RefObject,
 } from "react";
 import { forwardRef, memo, useEffect, useRef, useState } from "react";
-import { useThrottle } from "../../hooks/useThrottle";
 import "./index.scss";
 
 type SelectAutoCompleteProps = {
@@ -107,7 +106,7 @@ export const SelectAutoComplete = memo(
             placeholder={inputProps.placeholder}
             onFocus={handleFocus}
             onBlur={onBlur}
-            onChange={useThrottle(handleChange, 100)}
+            onChange={handleChange}
             aria-haspopup="listbox"
             aria-expanded="false"
             onKeyDown={handleKeyDown}
