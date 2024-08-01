@@ -1,43 +1,44 @@
 .select-custom-autocomplete {
-    position: relative;
-    display: inline-block;    
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  .field {
     width: 100%;
-    .field{
-      width: 100%;
-      color: #FFF;
+    color: #fff;
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    &:focus {
+      outline: none;
+    }
+  }
+  .list {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+    background-color: #221d1d;
+    max-height: 200px;
+    z-index: 2;
+    .default-item,
+    .selected-item {
       padding: 10px;
-      background-color: transparent;
-      border: none;
-      border-bottom: 1px solid #FFF;  
-      &:focus {
-          outline: none;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      border-bottom: 1px solid #ff2261;
+      background-color: #252728;
+      &:hover {
+        cursor: pointer;
+        background-color: #383a3d;
       }
     }
-    .list{        
-        overflow-y: scroll;
-        overflow-x: hidden;        
-        position: absolute;
-        list-style: none;
-        padding: 0;
-        width: 100%;        
-        margin: 0;        
-        text-align: left;
-        background-color: #221D1D;        
-        max-height: 200px;
-        z-index: 2;        
-        .default-item, .selected-item {
-            padding: 10px;
-            text-overflow: ellipsis;
-            overflow: hidden;            
-            border-bottom:1px solid #FF2261;
-            background-color: #252728;
-            &:hover{
-              cursor: pointer;
-              background-color: #383a3d;
-            }
-        }                
-        .selected-item {
-            background-color: #383a3d;
-          }
-      }
+    .selected-item {
+      background-color: #383a3d;
+    }
   }
+}

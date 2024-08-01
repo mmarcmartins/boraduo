@@ -7,11 +7,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import "./styles.scss";
 import { SelectAutoComplete } from "../SelectAutoComplete";
 
+const availableGames = ["League of legends", "Call of duty"];
+
 const homeFormSchema = (gameOptions: string[]) =>
   z
     .object({
-      name: z.string().min(1, "Nome é obrigatório"),
-      game: z.string().refine((val) => gameOptions.includes(val)),
+      name: z
+        .string()
+        .min(3, "Minimo de 3 caracteres")
+        .max(20, "O nome pode conter no máximo 20 caracteres"),
+      game: z
+        .string()
+        .min(1, "Por favor selecione um jogo")
+        .refine(
+          (val) => availableGames.includes(val),
+          "Selecione um jogo válido",
+        ),
       roomCode: z.string().optional(),
       JoinRoom: z.boolean().default(true),
     })
@@ -21,12 +32,10 @@ const homeFormSchema = (gameOptions: string[]) =>
       },
       {
         message: "Código da sala é obrigatório",
-      }
+      },
     );
 
 type homeFormData = z.infer<ReturnType<typeof homeFormSchema>>;
-
-const availableGames = ["League of legends", "Call of duty"];
 
 export const HomeForm = () => {
   const {
@@ -34,14 +43,13 @@ export const HomeForm = () => {
     handleSubmit,
     setValue,
     watch,
+    trigger,
+    clearErrors,
     formState: { errors },
   } = useForm<homeFormData>({
     resolver: zodResolver(homeFormSchema(availableGames)),
+    mode: "onBlur",
   });
-
-  const handleSwitchClick = (event: React.MouseEvent<HTMLInputElement>) => {
-    setValue("JoinRoom", event.target.checked);
-  };
 
   const watchJoinRoom = watch("JoinRoom", false);
 
@@ -57,15 +65,24 @@ export const HomeForm = () => {
         <div className="input-holder">
           <label htmlFor="name">Nome:</label>
           <input type="text" {...register("name")} />
-          {errors.name && <span>{errors.name.message}</span>}
+          {errors.name && <span className="error">{errors.name.message}</span>}
         </div>
         <div className="input-holder">
           <label htmlFor="game">Quero um duo para:</label>
           <SelectAutoComplete
+            {...register("game")}
             items={availableGames}
-            onSelectItem={(newValue) => setValue("game", newValue)}
+            onBlur={() => {
+              trigger("game");
+            }}
+            onValidate={() => {
+              clearErrors("game");
+            }}
+            onSelectItem={(newValue) => {
+              setValue("game", newValue);
+            }}
           />
-          {errors.game && <span>{errors.game.message}</span>}
+          {errors.game && <span className="error">{errors.game.message}</span>}
         </div>
 
         <div className={`input-holder ${disabledJoinClass}`}>
@@ -75,15 +92,20 @@ export const HomeForm = () => {
             disabled={!!disabledJoinClass}
             {...register("roomCode")}
           />
-          {errors.roomCode && <span>{errors.roomCode.message}</span>}
+          {errors.roomCode && (
+            <span className="error">{errors.roomCode.message}</span>
+          )}
         </div>
 
         <div className="switch-description">
-          <CustomSwitch checked={watchJoinRoom} onClick={handleSwitchClick} />
+          <CustomSwitch {...register("JoinRoom")} />
           <span>Criar sala / entrar na sala</span>
         </div>
       </div>
-      <Footer isJoinRoom={watchJoinRoom} />
+      <Footer
+        disabled={Object.keys(errors).length > 0}
+        isJoinRoom={watchJoinRoom}
+      />
     </form>
   );
 };

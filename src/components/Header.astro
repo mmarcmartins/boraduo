@@ -1,50 +1,56 @@
 ---
+
 ---
+
 <header class="header">
-    <h1 class="title">BORADUO</h1>
-    <button class="help">
-        <span>?</span>
-    </button>
+  <h1 class="title">BORADUO</h1>
+  <button class="help">
+    <span>?</span>
+  </button>
 </header>
 
 <style scoped>
-    .header { 
-        display: grid;
-        padding: 40px;
-        align-items: center;
-        grid-template-columns: 340px 40px;
-        gap: 20px;
-        justify-content: space-between;        
+  .header {
+    display: grid;
+    padding: 40px;
+    align-items: center;
+    grid-template-columns: 340px 40px;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  .help {
+    background-color: #393a3e;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    border: none;
+    text-align: center;
+    font-size: 1rem;
+    box-shadow: 3px 2px 4px 1px rgba(0, 0, 0, 0.29);
+    &:hover {
+      cursor: pointer;
     }
-    .help {
-        background-color: #393A3E;
-        border-radius: 100%;
-        width: 50px;
-        height: 50px;
-        border: none;
-        text-align: center;
-        font-size: 1rem;
-        box-shadow: 3px 2px 4px 1px rgba(0,0,0,0.29);
-        &:hover {
-            cursor: pointer;
-        }
-        span{
-            color: #FFF;
-        }
+    span {
+      color: #fff;
     }
-    .title, .title > span {
-        font-family: "Press Start 2P", system-ui;
-        font-weight: 400;
-        font-style: normal;
-    }
-    .title {
-        position: relative;
-        font-size: 3rem;
-        margin: 0;        
-        padding-top:5px;        
-        background: linear-gradient(90deg, rgba(237,207,170,1) 35%, rgba(76,169,255,1) 83%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    
+  }
+  .title,
+  .title > span {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .title {
+    position: relative;
+    font-size: 3rem;
+    margin: 0;
+    padding-top: 5px;
+    background: linear-gradient(
+      90deg,
+      rgba(237, 207, 170, 1) 35%,
+      rgba(76, 169, 255, 1) 83%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 </style>

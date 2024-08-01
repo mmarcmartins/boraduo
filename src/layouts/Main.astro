@@ -2,38 +2,41 @@
 interface Props {
   title: string;
 }
-import Header from '../components/Header.astro';
-import Global from '../styles/Global.astro';
+import Header from "../components/Header.astro";
+import Global from "../styles/Global.astro";
 const { title } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="pt-br">
   <Global>
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="Use boraduo para encontrar seu duo no jogos"
-    />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <slot name="header"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />	
-	  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-    <title>{title}</title>
-  </head>
-  <body>
-      <Header/>
+    <head>
+      <meta charset="UTF-8" />
+      <meta
+        name="description"
+        content="Use boraduo para encontrar seu duo no jogos"
+      />
+      <meta name="viewport" content="width=device-width" />
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      <meta name="generator" content={Astro.generator} />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <slot name="header" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+        rel="stylesheet"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet"
+      />
+      <title>{title}</title>
+    </head>
+    <body>
+      <Header />
       <slot />
-  </body>
-</Global>
+    </body>
+  </Global>
 </html>
 <style>
   body {
