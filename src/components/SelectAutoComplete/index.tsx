@@ -35,10 +35,18 @@ export const SelectAutoComplete = memo(
       }, [isOpened]);
 
       const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (["Enter", "ArrowUp", "ArrowDown"].includes(e.key))
+        if (["Enter", "ArrowUp", "ArrowDown", "Escape"].includes(e.key))
           e.preventDefault();
 
         switch (e.key) {
+          case "Escape":
+            setUserInput("");
+            onSelectItem("");
+            setIsOpened(false);
+            setFilter([]);
+            setActiveIndex(0);
+            onValidate();
+            break;
           case "Enter":
             setUserInput(filter[activeIndex]);
             onSelectItem(items[activeIndex]);
