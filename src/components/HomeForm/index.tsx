@@ -16,43 +16,75 @@ const homeFormSchema = (gameOptions: string[]) =>
     .object({
       name: z
         .string()
-        .min(3, "Minimo de 3 caracteres")
+        .min(5, "Minimo de 5 caracteres")
         .max(20, "O nome pode conter no máximo 20 caracteres"),
       game: z
         .string()
-        .min(1, "Por favor selecione um jogo")
         .refine(
           (val) => availableGames.includes(val),
           "Selecione um jogo válido",
-        ),
+        )
+        .optional(),
       roomCode: z.string().optional(),
-      JoinRoom: z.boolean().default(true),
+      joinRoom: z.boolean(),
     })
     .refine(
-      ({ JoinRoom, roomCode }) => {
-        if (JoinRoom && !roomCode) return false;
+      ({ joinRoom, roomCode }) => {
+        if (joinRoom && roomCode === "") return false;
+        return true;
       },
       {
         message: "Código da sala é obrigatório",
+        path: ["roomCode"],
       },
+    )
+    .refine(
+      ({ joinRoom, game }) => {
+        if (joinRoom && game !== "") return true;
+        if (game === "") return false;
+        return true;
+      },
+      { message: "Selecione um jogo", path: ["game"] },
     );
+
+const toBoolean = (val: string) => (val === "" ? false : true);
 
 export const HomeForm = () => {
   const {
     register,
     handleSubmit,
     setValue,
-    watch,
+    resetField,
     clearErrors,
+    getValues,
     formState: { errors },
   } = useForm<homeFormData>({
     resolver: zodResolver(homeFormSchema(availableGames)),
     mode: "onBlur",
+    defaultValues: {
+      game: "",
+      name: "",
+      roomCode: "",
+      joinRoom: false,
+    },
   });
 
-  const watchJoinRoom = watch("JoinRoom", false);
+  const watchJoinRoom = getValues("joinRoom");
 
   const disabledJoinClass = !watchJoinRoom ? "disabled" : "";
+  const disableSelectGame = watchJoinRoom ? "disabled" : "";
+  const { onChange: onChangeSwitch, ...registerJoinRoom } =
+    register("joinRoom");
+
+  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeSwitch(event);
+    clearErrors(["game", "roomCode"]);
+    if (event.target.checked) {
+      resetField("game");
+      return;
+    }
+    resetField("roomCode");
+  };
 
   const onSubmit = (data: homeFormData) => {
     console.log(data);
@@ -66,11 +98,12 @@ export const HomeForm = () => {
           <input type="text" {...register("name")} />
           {errors.name && <span className="error">{errors.name.message}</span>}
         </div>
-        <div className="input-holder">
+        <div className={`input-holder ${disableSelectGame}`}>
           <label htmlFor="game">Quero um duo para:</label>
           <SelectAutoComplete
             {...register("game")}
             items={availableGames}
+            disabled={toBoolean(disableSelectGame)}
             onValidate={() => {
               clearErrors("game");
             }}
@@ -85,7 +118,7 @@ export const HomeForm = () => {
           <label htmlFor="roomCode">Código da sala</label>
           <input
             type="text"
-            disabled={!!disabledJoinClass}
+            disabled={toBoolean(disabledJoinClass)}
             {...register("roomCode")}
           />
           {errors.roomCode && (
@@ -94,7 +127,7 @@ export const HomeForm = () => {
         </div>
 
         <div className="switch-description">
-          <CustomSwitch {...register("JoinRoom")} />
+          <CustomSwitch onChange={handleSwitchChange} {...registerJoinRoom} />
           <span>Criar sala / entrar na sala</span>
         </div>
       </div>

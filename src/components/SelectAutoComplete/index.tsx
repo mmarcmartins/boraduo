@@ -25,6 +25,12 @@ export const SelectAutoComplete = memo(
       const selectedRef = useRef<HTMLUListElement | null>(null);
       const inputRef = ref as MutableRefObject<HTMLInputElement>;
 
+      useEffect(() => {
+        if (inputProps.disabled) {
+          setUserInput("");
+        }
+      }, [inputProps.disabled]);
+
       const scrollIntoItem = () => {
         const selected = selectedRef.current?.querySelector(".selected-item");
         selected?.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -102,9 +108,9 @@ export const SelectAutoComplete = memo(
         inputProps.onBlur?.(e);
         setTimeout(() => setIsOpened(false), 100);
       };
-
+      const disabled = inputProps.disabled ? "disabled" : "";
       return (
-        <div className="select-custom-autocomplete">
+        <div className={`select-custom-autocomplete ${disabled}`}>
           <input
             type="text"
             value={userInput}
@@ -114,6 +120,7 @@ export const SelectAutoComplete = memo(
             placeholder={inputProps.placeholder}
             onFocus={handleFocus}
             onBlur={onBlur}
+            disabled={inputProps.disabled}
             onChange={handleChange}
             aria-haspopup="listbox"
             aria-expanded="false"
