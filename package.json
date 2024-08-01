@@ -10,6 +10,7 @@
     "format": "prettier --write ./src",
     "astro": "astro"
   },
+  "precommit.silent": false,
   "pre-commit": [
     "format"
   ],
