@@ -10,6 +10,9 @@
     "format": "prettier --write ./src",
     "astro": "astro"
   },
+  "pre-commit": [
+    "format"
+  ],
   "dependencies": {
     "@astrojs/check": "^0.8.2",
     "@astrojs/react": "^3.6.0",
@@ -27,6 +30,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "pre-commit": "^1.2.2",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1"
   }
