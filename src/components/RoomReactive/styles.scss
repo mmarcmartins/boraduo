@@ -1,0 +1,36 @@
+.room-grid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr 25%;
+    gap: 20px;
+    grid-template-rows: 50px 1fr;    
+    grid-template-areas:
+    "video-grid time-countdown"
+    "video-grid room-controls";    
+    .video-grid{ 
+        display: grid;        
+        grid-area: video-grid;
+        gap: 20px;        
+    }
+    .time-countdown{ 
+        grid-area: time-countdown;
+        display:flex;
+        justify-content: center;
+        align-items: center;        
+        .time-left {
+            color: #FFF;
+            font-size:1.2rem;
+        }
+    }
+    .room-controls{ 
+        grid-area: room-controls;
+        display: grid;
+        grid-template-rows: 1fr 80px;        
+    }
+}
+.shelter {    
+    background-color: #282828;
+    border-radius: 8px;
+    border: 1px solid #EDCFAA;
+}

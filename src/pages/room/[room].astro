@@ -1,16 +1,11 @@
 ---
 import Main from "../../layouts/Main.astro";
+import { RoomReactive } from '../../components/RoomReactive';
 ---
 
 <Main title="Boraduo - Sala" header={false}>
-  <main class="container">
-    <section>
-      <div class="video-grid"></div>
-      <div class="room-controls">
-        <div class="chat"></div>
-        <div class="controls"></div>
-      </div>
-    </section>
+  <main class="container">    
+      <RoomReactive/>    
   </main>
 </Main>
 
@@ -19,6 +14,9 @@ import Main from "../../layouts/Main.astro";
     max-width: 100%;
     width: 1920px;
     height: 100vh;
-    padding: 40px;
+    padding: 20px;
+    background-image: url(/images/bgroom.svg);
+    background-repeat: no-repeat;
+    background-position: bottom left;
   }
 </style>
