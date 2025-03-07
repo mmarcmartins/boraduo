@@ -1,0 +1,14 @@
+.button-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #383a3d;
+    border: none;
+    border: 1px solid #EDCFAA;
+    &:hover {
+        cursor: pointer;
+    }
+}
