@@ -8,11 +8,13 @@
     grid-template-areas:
     "video-grid time-countdown"
     "video-grid room-controls";    
+
     .video-grid{ 
         display: grid;        
         grid-area: video-grid;
         gap: 20px;        
     }
+    
     .time-countdown{ 
         grid-area: time-countdown;
         display:flex;
@@ -28,7 +30,14 @@
         display: grid;
         grid-template-rows: 1fr 80px;        
     }
+    .controls {
+        display:flex;
+        padding: 10px 20px;        
+        justify-content: space-between;
+        align-items: center;
+    }
 }
+
 .shelter {    
     background-color: #282828;
     border-radius: 8px;

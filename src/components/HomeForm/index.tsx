@@ -87,7 +87,6 @@ export const HomeForm = () => {
     const result = homeFormSchema(availableGames).safeParse(data);
     if(!result.success) return;
     console.log('passou');
-
   };
 
   return (
