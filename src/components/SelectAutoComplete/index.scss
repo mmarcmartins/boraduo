@@ -32,7 +32,7 @@
       overflow: hidden;
       border-bottom: 1px solid #ff2261;
       background-color: #252728;
-      &:hover {
+      &:hover, &:focus {
         cursor: pointer;
         background-color: #383a3d;
       }
