@@ -68,10 +68,14 @@ export const RoomReactive = () => {
       <div className="room-controls shelter">
         <Chat />
         <div className="controls">
-          <ButtonControl className="camera">
+          <ButtonControl className="camera" onClick={() => {
+            dispatch({ type: "TOGGLE_CAMERA", payload: !camera });
+          }}>
             {camera ? <PiVideoCameraFill {...iconConfig} /> : <PiVideoCameraSlashFill {...iconConfig}  />}
           </ButtonControl>
-          <ButtonControl className="microphone">
+          <ButtonControl className="microphone" onClick={() => {            
+            dispatch({ type: "TOGGLE_MICROPHONE", payload: !microphone });
+          }}>
             {microphone ? <PiMicrophoneFill {...iconConfig}  /> : <PiMicrophoneSlashFill {...iconConfig}  />}
           </ButtonControl>
           <ButtonControl className="copy">
