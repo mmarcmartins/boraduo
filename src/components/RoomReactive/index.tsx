@@ -6,12 +6,14 @@ import {
   PiLinkSimpleHorizontalBold,
 } from "react-icons/pi";
 import { IoIosExit } from "react-icons/io";
+import { ToastContainer } from 'react-toastify';
 
 import { Chat } from "./Chat";
 
 import { useReducer } from "react";
 import "./styles.scss";
 import ButtonControl from "./Chat/components/ButtonControl/ButtonControl";
+import { showSuccessToast, showErrorToast } from "../../utils/toast";
 
 type ControlsState = {
   camera: boolean;
@@ -50,12 +52,26 @@ export const RoomReactive = () => {
     controlsReducer,
     initialState,
   );
+        
 
   const iconConfig = {
     size: '2em',
     color: '#FFF'
   }
 
+  const copyRoomLink = () => {    
+    const currentUrl = window.location.href;
+    
+    navigator.clipboard.writeText(currentUrl)
+      .then(() => {      
+        showSuccessToast("Link da sala copiado para a área de transferência!", "copy-success");
+      })
+      .catch((err) => {        
+        showErrorToast("Erro ao copiar o link. Tente novamente.", "copy-error");
+        console.error('Failed to copy: ', err);
+      });
+  };
+  
   return (
     <section className="room-grid">
       <article className="video-grid">
@@ -78,8 +94,8 @@ export const RoomReactive = () => {
           }}>
             {microphone ? <PiMicrophoneFill {...iconConfig}  /> : <PiMicrophoneSlashFill {...iconConfig}  />}
           </ButtonControl>
-          <ButtonControl className="copy">
-            <PiLinkSimpleHorizontalBold {...iconConfig} {...iconConfig} />
+          <ButtonControl className="copy" onClick={copyRoomLink}>
+            <PiLinkSimpleHorizontalBold {...iconConfig} />
           </ButtonControl>
           <ButtonControl className="exit">
             <IoIosExit {...iconConfig} />

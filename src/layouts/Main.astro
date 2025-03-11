@@ -5,6 +5,9 @@ interface Props {
 }
 import Header from "../components/Header.astro";
 import Global from "../styles/Global.astro";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const { title, header = true } = Astro.props;
 ---
 
@@ -36,6 +39,7 @@ const { title, header = true } = Astro.props;
     <body>
       {header && <Header />}
       <slot />
+      <ToastContainer client:only="react" />      
     </body>
   </Global>
 </html>
