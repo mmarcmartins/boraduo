@@ -10,14 +10,16 @@ export const Footer = ({ isJoinRoom, disabled }: FooterProps) => {
     <div className="footer">
       <ActionButton
         disabled={isJoinRoom || disabled}
-        title="Criar sala"
         onClick={() => console.log("test")}
-      />
+      >
+        <span>Criar sala</span>
+        </ActionButton>
       <ActionButton
-        disabled={!isJoinRoom || disabled}
-        title="Entrar na sala"
+        disabled={!isJoinRoom || disabled}        
         onClick={() => console.log("test")}
-      />
+      >
+        <span>Entrar na sala</span>
+      </ActionButton>
     </div>
   );
 };

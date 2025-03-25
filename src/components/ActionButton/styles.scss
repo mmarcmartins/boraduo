@@ -8,6 +8,9 @@
   padding: 15px 30px;
   border: 1px solid #23262d;
   transition: border-color 0.1s ease-in-out;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 300;
   &:not(:disabled):hover {
     cursor: pointer;
     border-color: #fff;
@@ -29,11 +32,6 @@
     transition:
       bottom 0.2s ease-in-out,
       right 0.2s ease-in-out;
-  }
-  .title {
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 300;
   }
   &:disabled {
     opacity: 0.4;
