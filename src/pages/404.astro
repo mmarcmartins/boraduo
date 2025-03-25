@@ -1,65 +1,28 @@
 ---
+import Title from "../components/Title.astro";
+import BackgroundBlocks from "../components/BackgroundBlocks.astro";
 import Main from "../layouts/Main.astro";
+import Subtitle from "../components/Subtitle.astro";
 ---
 
-<Main title="Boraduo - Página não encontrada">
+<Main title="Boraduo - Página não encontrada" header={false}>
   <main class="container">
-    <div class="error-content">
-      <h1>404</h1>
-      <h2>Página não encontrada</h2>
-      <p>Ops! Parece que você se perdeu no caminho.</p>
-      <a href="/" class="btn-home">Voltar para a página inicial</a>
-    </div>
+    <Title classes="header-title" />
+    <BackgroundBlocks>
+      <Subtitle subtitle="Parece que você está perdido, confie no mago !" />
+    </BackgroundBlocks>
   </main>
 </Main>
 
-<style scoped>
+<style is:global>
   .container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: center;
     justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    padding: 20px;
-  }
-
-  .error-content {
     text-align: center;
-    color: #fff;
-    max-width: 600px;
   }
-
-  h1 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 6rem;
-    margin-bottom: 1rem;
-    color: #FF5400;
+  .header-title {
+    padding: 40px;
   }
-
-  h2 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-  }
-
-  .btn-home {
-    display: inline-block;
-    background-color: #FF5400;
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-
-  .btn-home:hover {
-    background-color: #FF7A33;
-  }
-</style> 
+</style>

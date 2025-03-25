@@ -6,7 +6,6 @@ import {
   PiLinkSimpleHorizontalBold,
 } from "react-icons/pi";
 import { IoIosExit } from "react-icons/io";
-import { ToastContainer } from 'react-toastify';
 
 import { Chat } from "./Chat";
 
@@ -23,6 +22,11 @@ type ControlsState = {
 type ControlsAction = {
   type: string;
   payload: boolean;
+};
+
+const iconConfig = {
+  size: "2em",
+  color: "#FFF",
 };
 
 const controlsReducer = (state: ControlsState, action: ControlsAction) => {
@@ -52,26 +56,24 @@ export const RoomReactive = () => {
     controlsReducer,
     initialState,
   );
-        
 
-  const iconConfig = {
-    size: '2em',
-    color: '#FFF'
-  }
-
-  const copyRoomLink = () => {    
+  const copyRoomLink = () => {
     const currentUrl = window.location.href;
-    
-    navigator.clipboard.writeText(currentUrl)
-      .then(() => {      
-        showSuccessToast("Link da sala copiado para a área de transferência!", "copy-success");
+
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => {
+        showSuccessToast(
+          "Link da sala copiado para a área de transferência!",
+          "copy-success",
+        );
       })
-      .catch((err) => {        
+      .catch((err) => {
         showErrorToast("Erro ao copiar o link. Tente novamente.", "copy-error");
-        console.error('Failed to copy: ', err);
+        console.error("Failed to copy: ", err);
       });
   };
-  
+
   return (
     <section className="room-grid">
       <article className="video-grid">
@@ -84,15 +86,29 @@ export const RoomReactive = () => {
       <div className="room-controls shelter">
         <Chat />
         <div className="controls">
-          <ButtonControl className="camera" onClick={() => {
-            dispatch({ type: "TOGGLE_CAMERA", payload: !camera });
-          }}>
-            {camera ? <PiVideoCameraFill {...iconConfig} /> : <PiVideoCameraSlashFill {...iconConfig}  />}
+          <ButtonControl
+            className="camera"
+            onClick={() => {
+              dispatch({ type: "TOGGLE_CAMERA", payload: !camera });
+            }}
+          >
+            {camera ? (
+              <PiVideoCameraFill {...iconConfig} />
+            ) : (
+              <PiVideoCameraSlashFill {...iconConfig} />
+            )}
           </ButtonControl>
-          <ButtonControl className="microphone" onClick={() => {            
-            dispatch({ type: "TOGGLE_MICROPHONE", payload: !microphone });
-          }}>
-            {microphone ? <PiMicrophoneFill {...iconConfig}  /> : <PiMicrophoneSlashFill {...iconConfig}  />}
+          <ButtonControl
+            className="microphone"
+            onClick={() => {
+              dispatch({ type: "TOGGLE_MICROPHONE", payload: !microphone });
+            }}
+          >
+            {microphone ? (
+              <PiMicrophoneFill {...iconConfig} />
+            ) : (
+              <PiMicrophoneSlashFill {...iconConfig} />
+            )}
           </ButtonControl>
           <ButtonControl className="copy" onClick={copyRoomLink}>
             <PiLinkSimpleHorizontalBold {...iconConfig} />

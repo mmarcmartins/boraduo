@@ -18,9 +18,7 @@ const homeFormSchema = (gameOptions: string[]) =>
         .string()
         .min(5, "Minimo de 5 caracteres")
         .max(20, "O nome pode conter no máximo 20 caracteres"),
-      game: z
-        .string()
-        .optional(),
+      game: z.string().optional(),
       roomCode: z.string().optional(),
       joinRoom: z.boolean(),
     })
@@ -37,12 +35,12 @@ const homeFormSchema = (gameOptions: string[]) =>
     .refine(
       ({ joinRoom, game }) => {
         if (joinRoom && game !== "") return true;
-        if (!availableGames.includes(game ?? '')) return false;
+        if (!availableGames.includes(game ?? "")) return false;
         if (game === "") return false;
         return true;
       },
       { message: "Selecione um jogo", path: ["game"] },
-    )
+    );
 
 const toBoolean = (val: string) => (val === "" ? false : true);
 
@@ -83,10 +81,10 @@ export const HomeForm = () => {
     resetField("roomCode");
   };
 
-  const onSubmit = (data: homeFormData) => {    
+  const onSubmit = (data: homeFormData) => {
     const result = homeFormSchema(availableGames).safeParse(data);
-    if(!result.success) return;
-    console.log('passou');
+    if (!result.success) return;
+    console.log("passou");
   };
 
   return (
