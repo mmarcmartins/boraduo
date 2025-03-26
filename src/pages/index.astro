@@ -1,30 +1,29 @@
 ---
 import { HomeForm } from "../components/HomeForm";
+import { MetaBalls } from "../components/MetaBalls";
 import Subtitle from "../components/Subtitle.astro";
 import Main from "../layouts/Main.astro";
 ---
 
 <Main title="Boraduo - Home">
-  <script
-    src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
-    type="module"
-    slot="header"></script>
   <main class="container">
     <section class="wrapper">
+      <div class="custom-background">
+        <MetaBalls
+          color="#393a3e"
+          cursorBallColor="#393a3e"
+          cursorBallSize={2}
+          ballCount={15}
+          animationSize={10}
+          enableMouseInteraction={true}
+          enableTransparency={true}
+          hoverSmoothness={0.15}
+          clumpFactor={0.8}
+          speed={0.2}
+          client:only
+        />
+      </div>
       <div class="hunters">
-        <dotlottie-player
-          class="bg-animation"
-          layout={{ fit: "cover" }}
-          src="/bganimation.json"
-          background="transparent"
-          speed="0.4"
-          direction="1"
-          playMode="normal"
-          loop
-          autoplay></dotlottie-player>
-        <div class="notice">
-          <h2></h2>
-        </div>
         <Subtitle subtitle="Encontre seu duo de maneira mais simples" />
         <img
           class="hunters-fig"
@@ -40,6 +39,15 @@ import Main from "../layouts/Main.astro";
 </Main>
 
 <style scoped>
+  .custom-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: -1;
+    left: 0;
+    overflow:hidden;
+  }
   .form {
     display: flex;
     justify-content: center;
@@ -61,17 +69,9 @@ import Main from "../layouts/Main.astro";
       width: 800px;
       max-width: 110%;
     }
-    .bg-animation {
-      position: absolute;
-      z-index: -1;
-      width: 75vw;
-      height: 1200px;
-      left: -140px;
-    }
   }
   .container {
     max-width: 100%;
-    width: 1920px;
-    height: calc(100vh - 152px);
+    width: 1920px;    
   }
 </style>
