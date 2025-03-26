@@ -1,3 +1,4 @@
+import { ClickSpark } from "../ClickSpark";
 import "./styles.scss";
 import type { ButtonHTMLAttributes } from "react";
 
@@ -13,7 +14,15 @@ export const ActionButton = ({
       className={`action-button ${className}`}
       {...buttonProps}
     >      
+      <ClickSpark
+        sparkColor='#fff'
+        sparkSize={10}
+        sparkRadius={15}
+        sparkCount={8}
+        duration={400}
+      >
       {children}
+      </ClickSpark>
     </button>
   );
 };

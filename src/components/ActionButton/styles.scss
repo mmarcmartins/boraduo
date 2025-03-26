@@ -10,6 +10,7 @@
   transition: border-color 0.1s ease-in-out;
   color: #fff;
   font-size: 1rem;
+  text-align:left;
   font-weight: 300;
   &:not(:disabled):hover {
     cursor: pointer;
