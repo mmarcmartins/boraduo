@@ -1,49 +1,23 @@
 ---
-import Title from "../components/Title.astro";
-import BackgroundBlocks from "../components/BackgroundBlocks.astro";
-import Main from "../layouts/Main.astro";
 import Subtitle from "../components/Subtitle.astro";
 import { ActionButton } from "../components/ActionButton";
+import BlockPages from "../components/BlockPages.astro";
 ---
 
-<Main title="Boraduo - Página não encontrada" header={false}>
-  <main class="container">
-    <Title classes="header-title" />
-    <BackgroundBlocks classes="block-container">
-      <Subtitle subtitle="Parece que você está perdido, confie no mago !" />
-      <div class="description">
-        <img src="/images/mage.svg" alt="você está perdido"/>
-      </div>
-      <ActionButton className="btn-not-found">
-        <a class="home-link" href="/">
-          Voltar a tela inicial
-        </a>
-      </ActionButton>
-    </BackgroundBlocks>
-  </main>
-</Main>
+<BlockPages title="Boraduo - Página não encontrada">
+  <Subtitle subtitle="Parece que você está perdido, confie no mago !" />
+  <div class="description">
+    <img src="/images/mage.svg" alt="você está perdido" />
+  </div>
+  <ActionButton className="btn-not-found">
+    <a class="home-link" href="/"> Voltar a tela inicial </a>
+  </ActionButton>
+</BlockPages>
 
 <style is:global>
-
-  .block-container .block.main{
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 42px;
-  }
-  .container {
-    display: grid;
-    grid-template-columns: 1fr;
-    align-content: center;
-    justify-content: center;
-    text-align: center;    
-    img {      
-      max-width: 75%;
-    }
-  }
   .home-link {
     text-decoration: none;
-    color: #FFF;
+    color: #fff;
     text-align: center;
     width: 100%;
     font-weight: 300;
