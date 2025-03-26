@@ -1,0 +1,42 @@
+---
+import Subtitle from "../components/Subtitle.astro";
+import BlockPages from "../components/BlockPages.astro";
+import { Count } from "../components/Count";
+---
+
+<BlockPages title="Boraduo - Sessão finalizada">
+  <Subtitle subtitle="Obrigado por utilizar boraduo!" />
+  <div class="description">
+    <img src="/images/handshake.svg" alt="obrigado" />
+  </div>
+  
+    <Count
+    from={5}
+    to={0}
+    separator=","
+    direction="down"
+    duration={20}
+    className="count-down"
+    client:only
+    />
+</BlockPages>
+
+<style is:global>
+   .count-down {
+    font-size: 3rem;
+    color:#FFF;
+   }
+  .home-link {
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    font-weight: 300;
+  }
+  .btn-not-found {
+    max-width: 300px;
+  }
+  .header-title {
+    padding: 40px;
+  }
+</style>
