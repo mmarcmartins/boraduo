@@ -1,0 +1,41 @@
+---
+import Main from "../layouts/Main.astro";
+import BackgroundBlocks from "./BackgroundBlocks.astro";
+import Title from "./Title.astro";
+
+interface Props {
+  classes?: string;
+  title: string;
+}
+
+const { classes = "", title } = Astro.props;
+---
+
+<Main title={title} header={false}>
+  <main class:list={["container", classes]}>
+    <Title classes="header-title" />
+    <BackgroundBlocks classes="block-container">  
+        <slot />
+    </BackgroundBlocks>
+  </main>
+</Main>
+
+<style is:global>
+  .block-container .block.main {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: calc(100% - 100px);
+    gap: 42px;
+  }
+  .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    img {
+      max-width: 75%;
+    }
+  }
+</style>
