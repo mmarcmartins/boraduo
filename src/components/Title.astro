@@ -1,4 +1,6 @@
 ---
+import { GradientText } from './GradientText';
+
 interface Props {
   classes?: string;
 }
@@ -6,26 +8,17 @@ interface Props {
 const { classes = "" } = Astro.props;
 ---
 
-<h1 class:list={["title", classes]}>BORADUO</h1>
+<GradientText>
+  <h1 class="title">BORADUO</h1>
+</GradientText>
 
 <style is:global>
-  .title,
-  .title > span {
+  .title  {
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
-  }
-  .title {
-    position: relative;
     font-size: 3rem;
-    margin: 0;
-    padding-top: 5px;
-    background: linear-gradient(
-      90deg,
-      rgba(237, 207, 170, 1) 35%,
-      rgba(76, 169, 255, 1) 83%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    padding-left:20px;
   }
+
 </style>
