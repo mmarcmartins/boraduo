@@ -2,13 +2,14 @@
 interface Props {
   title: string;
   header?: boolean;
+  classes?: string;
 }
 import Header from "../components/Header.astro";
 import Global from "../styles/Global.astro";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const { title, header = true } = Astro.props;
+const { title, header = true, classes } = Astro.props;
 ---
 
 <!doctype html>
@@ -36,7 +37,7 @@ const { title, header = true } = Astro.props;
       />
       <title>{title}</title>
     </head>
-    <body>
+    <body class:list={[classes]}>
       {header && <Header />}
       <slot />
       <ToastContainer client:only="react" />

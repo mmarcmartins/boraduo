@@ -5,7 +5,7 @@ import Subtitle from "../components/Subtitle.astro";
 import Main from "../layouts/Main.astro";
 ---
 
-<Main title="Boraduo - Home">
+<Main title="Boraduo - Home" classes="custom-body">
   <main class="container">
     <section class="wrapper">
       <div class="custom-background">
@@ -38,7 +38,14 @@ import Main from "../layouts/Main.astro";
   </main>
 </Main>
 
-<style scoped>
+<style is:global>
+  .custom-body {
+    height: 100vh;
+    justify-content: center;
+    align-items: start;
+    display: grid;
+    grid-template-rows: auto;
+  }
   .custom-background {
     position: absolute;
     width: 100%;
@@ -46,7 +53,7 @@ import Main from "../layouts/Main.astro";
     top: 0;
     z-index: -1;
     left: 0;
-    overflow:hidden;
+    overflow: hidden;
   }
   .form {
     display: flex;
@@ -56,9 +63,7 @@ import Main from "../layouts/Main.astro";
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 28px;
-    padding-top: 100px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding: 40px;
   }
   .hunters {
     display: grid;
@@ -69,9 +74,5 @@ import Main from "../layouts/Main.astro";
       width: 800px;
       max-width: 110%;
     }
-  }
-  .container {
-    max-width: 100%;
-    width: 1920px;    
   }
 </style>
