@@ -2,6 +2,7 @@
 import Subtitle from "../components/Subtitle.astro";
 import { ActionButton } from "../components/ActionButton";
 import BlockPages from "../components/BlockPages.astro";
+import LinkButton from "../components/LinkButton.astro";
 ---
 
 <BlockPages title="Boraduo - Página não encontrada">
@@ -9,9 +10,9 @@ import BlockPages from "../components/BlockPages.astro";
   <div class="description">
     <img src="/images/mage.svg" alt="você está perdido" />
   </div>
-  <ActionButton className="btn-not-found">
-    <a class="home-link" href="/"> Voltar a tela inicial </a>
-  </ActionButton>
+  <LinkButton href="/" classes="btn-not-found">
+    Voltar a tela inicial
+  </LinkButton>
 </BlockPages>
 
 <style is:global>
