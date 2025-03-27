@@ -1,7 +1,7 @@
 ---
 import Subtitle from "../components/Subtitle.astro";
 import BlockPages from "../components/BlockPages.astro";
-import { Count } from "../components/Count";
+import { RedirectCountdown } from "../components/RedirectCountdown";
 ---
 
 <BlockPages title="Boraduo - Sessão finalizada">
@@ -9,23 +9,22 @@ import { Count } from "../components/Count";
   <div class="description">
     <img src="/images/handshake.svg" alt="obrigado" />
   </div>
-  
-    <Count
-    from={5}
-    to={0}
-    separator=","
-    direction="down"
-    duration={20}
+
+  <RedirectCountdown
+    from={1}
+    to={5}
+    redirectTo="/"
+    duration={5}
     className="count-down"
     client:only
-    />
+  />
 </BlockPages>
 
 <style is:global>
-   .count-down {
+  .count-down {
     font-size: 3rem;
-    color:#FFF;
-   }
+    color: #fff;
+  }
   .home-link {
     text-decoration: none;
     color: #fff;
