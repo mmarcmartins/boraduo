@@ -8,9 +8,14 @@ import type {
 import { forwardRef, memo, useEffect, useRef, useState } from "react";
 import "./index.scss";
 
+type OptionItem = {
+  id: string;
+  name: string;
+};
+
 type SelectAutoCompleteProps = {
-  items: string[];
-  onSelectItem: (name: string) => void;
+  items: OptionItem[];
+  onSelectItem: (id: string) => void;
   placeholder?: string;
   onValidate: VoidFunction;
 } & React.InputHTMLAttributes<HTMLInputElement>;
@@ -19,7 +24,7 @@ export const SelectAutoComplete = memo(
   forwardRef<HTMLInputElement, SelectAutoCompleteProps>(
     ({ items, onSelectItem, onValidate, ...inputProps }, ref) => {
       const [userInput, setUserInput] = useState("");
-      const [filter, setFilter] = useState<string[]>(items);
+      const [filter, setFilter] = useState<OptionItem[]>(items);
       const [isOpened, setIsOpened] = useState(false);
       const [activeIndex, setActiveIndex] = useState(0);
       const selectedRef = useRef<HTMLUListElement | null>(null);
@@ -54,8 +59,8 @@ export const SelectAutoComplete = memo(
             onValidate();
             break;
           case "Enter":
-            setUserInput(filter[activeIndex]);
-            onSelectItem(items[activeIndex]);
+            setUserInput(filter[activeIndex].name);
+            onSelectItem(items[activeIndex].id);
             setIsOpened(false);
             setFilter([]);
             setActiveIndex(0);
@@ -82,7 +87,7 @@ export const SelectAutoComplete = memo(
         e.preventDefault();
         const newInput = e.target.value;
         const filtered = items.filter((item) =>
-          item.toLowerCase().includes(newInput.toLocaleLowerCase()),
+          item.name.toLowerCase().includes(newInput.toLocaleLowerCase()),
         );
         setUserInput(newInput);
         setFilter(filtered);
@@ -91,10 +96,10 @@ export const SelectAutoComplete = memo(
         if (!isOpened) setIsOpened(true);
       };
 
-      const handleItemClick = (item: string, index: number) => {
-        onSelectItem(items[index]);
+      const handleItemClick = (item: OptionItem, index: number) => {
+        onSelectItem(items[index].id);
         onValidate();
-        setUserInput(item);
+        setUserInput(item.name);
         setIsOpened(false);
         setFilter([]);
         setActiveIndex(0);
@@ -137,14 +142,14 @@ export const SelectAutoComplete = memo(
             >
               {filter.map((curr, index) => (
                 <li
-                  key={curr}
+                  key={curr.id}
                   className={
                     index === activeIndex ? "selected-item" : "default-item"
                   }
                   role="option"
                   onClick={() => handleItemClick(curr, index)}
                 >
-                  {curr}
+                  {curr.name}
                 </li>
               ))}
             </ul>

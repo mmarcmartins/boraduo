@@ -3,44 +3,40 @@ import { Footer } from "./Footer";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import availableGames from "../../../public/availableGames.json";
 import "./styles.scss";
 import { SelectAutoComplete } from "../SelectAutoComplete";
 
-const availableGames = ["League of legends", "Call of duty"];
+type homeFormData = z.infer<typeof homeFormSchema>;
 
-type homeFormData = z.infer<ReturnType<typeof homeFormSchema>>;
-
-const homeFormSchema = (gameOptions: string[]) =>
-  z
-    .object({
-      name: z
-        .string()
-        .min(5, "Minimo de 5 caracteres")
-        .max(20, "O nome pode conter no máximo 20 caracteres"),
-      game: z.string().optional(),
-      roomCode: z.string().optional(),
-      joinRoom: z.boolean(),
-    })
-    .refine(
-      ({ joinRoom, roomCode }) => {
-        if (joinRoom && roomCode === "") return false;
-        return true;
-      },
-      {
-        message: "Código da sala é obrigatório",
-        path: ["roomCode"],
-      },
-    )
-    .refine(
-      ({ joinRoom, game }) => {
-        if (joinRoom && game !== "") return true;
-        if (!availableGames.includes(game ?? "")) return false;
-        if (game === "") return false;
-        return true;
-      },
-      { message: "Selecione um jogo", path: ["game"] },
-    );
+const homeFormSchema = z
+  .object({
+    name: z
+      .string()
+      .min(5, "Minimo de 5 caracteres")
+      .max(20, "O nome pode conter no máximo 20 caracteres"),
+    game: z.string().optional(),
+    roomCode: z.string().optional(),
+    joinRoom: z.boolean(),
+  })
+  .refine(
+    ({ joinRoom, roomCode }) => {
+      if (joinRoom && roomCode === "") return false;
+      return true;
+    },
+    {
+      message: "Código da sala é obrigatório",
+      path: ["roomCode"],
+    },
+  )
+  .refine(
+    ({ joinRoom, game }) => {
+      if (joinRoom && game === "") return true;
+      if (game === "") return false;
+      return true;
+    },
+    { message: "Selecione um jogo", path: ["game"] },
+  );
 
 const toBoolean = (val: string) => (val === "" ? false : true);
 
@@ -54,7 +50,7 @@ export const HomeForm = () => {
     getValues,
     formState: { errors },
   } = useForm<homeFormData>({
-    resolver: zodResolver(homeFormSchema(availableGames)),
+    resolver: zodResolver(homeFormSchema),
     mode: "onBlur",
     defaultValues: {
       game: "",
@@ -82,9 +78,8 @@ export const HomeForm = () => {
   };
 
   const onSubmit = (data: homeFormData) => {
-    const result = homeFormSchema(availableGames).safeParse(data);
+    const result = homeFormSchema.safeParse(data);
     if (!result.success) return;
-    console.log("passou");
   };
 
   return (
