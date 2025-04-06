@@ -1,4 +1,43 @@
-.animated-gradient-text {
+---
+
+// Define component props
+export interface Props {
+  className?: string;
+  colors?: string[];
+  animationSpeed?: number;
+  showBorder?: boolean;
+}
+
+// Get props with defaults
+const {
+  className = "",
+  colors = ["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"],
+  animationSpeed = 8,
+  showBorder = false,
+} = Astro.props;
+
+// Create gradient string
+const gradientBackground = `linear-gradient(to right, ${colors.join(", ")})`;
+const animationDuration = `${animationSpeed}s`;
+---
+
+<div class={`animated-gradient-text ${className}`}>
+  {showBorder && (
+    <div 
+      class="gradient-overlay" 
+      style={`background-image: ${gradientBackground}; animation-duration: ${animationDuration};`}
+    ></div>
+  )}
+  <div 
+    class="text-content" 
+    style={`background-image: ${gradientBackground}; animation-duration: ${animationDuration};`}
+  >
+    <slot />
+  </div>
+</div>
+
+<style>
+  .animated-gradient-text {
   position: relative;
   margin: 0 auto;
   display: flex;
@@ -67,3 +106,5 @@
   color: transparent;
   animation: gradient linear infinite;
 }
+
+</style> 
